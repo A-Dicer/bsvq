@@ -6,7 +6,7 @@ router.use("/api", apiRoutes); // API Routes
 
 // If no API routes are hit, send the React app
 router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "../oscars/build/index.html"));
+  res.sendFile(path.join(__dirname, "../bsvq/build/index.html"));
 });
 
 module.exports = router;
