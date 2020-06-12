@@ -1,0 +1,17 @@
+#controller {
+    width: 400px;
+    margin: 15px auto;
+    padding: 10px;
+    /* background-color: #585858; */
+    border-radius: 10px;
+    /* border: solid #000 1px; */
+}
+
+/* #controller > .col-12:nth-child(1){
+    border-bottom: #000 solid 2px
+}
+#controller > .col-12:nth-child(4){
+    border-top: #000 solid 2px;
+    height: 100px;
+} */
+
