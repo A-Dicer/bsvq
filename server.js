@@ -12,10 +12,10 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static("splithub/build"));
+app.use(express.static("bsvq/build"));
 app.use(require("express-session")(
   { 
-    secret: 'buhtilps', 
+    secret: 'qvsb', 
     resave: false, 
     saveUninitialized: false
   }
