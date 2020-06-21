@@ -54,6 +54,16 @@ body {color: #fff}
     padding-bottom: 10px;
 }
 
+#controller > .col-12 > .row > img {
+    border-radius: 5px 5px 0 0;
+}
+
+#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(3) {
+    /* background: #585858; */
+    height: 100px;
+    padding-bottom: 10px;
+}
+
 #back {
     height: 100%;
     margin-left: -5px;
