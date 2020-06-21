@@ -1,10 +1,115 @@
-#controller {
+body {color: #fff}
+#controlContainer {
+    height: 100vh;
+    background-image: url('../../assets/images/background.jpg') ;
+    background-position: center top; 
+    background-repeat: no-repeat; 
+}
+
+#controlContainer > .row > .col-12:nth-child(1){height: 150px}
+
+#controlContainer > .row > .col-12:nth-child(1) > img {
+    display: block;
+    flex: none;
+    margin: 0 auto;
+}
+
+#controlContainer > .row > .col-12:nth-child(2) > .row   {
     width: 400px;
     margin: 15px auto;
-    padding: 10px;
-    /* background-color: #585858; */
+    padding-bottom: 10px;
+    background-color: #a6abce;
     border-radius: 10px;
-    /* border: solid #000 1px; */
+    overflow: hidden;
+    box-shadow: 2px 2px 7px 0px #000;
+}
+
+.menu {
+    background: #555b85;
+    height: 5px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #000;
+    border-top: solid 1px #000;
+}
+
+.carot {
+    position: absolute;
+    top: -19px;
+    left: 10px;
+    color: #555a85;
+    border: solid 1px #000;
+    height: 14px;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.carot:hover {
+    color: #8890d5;
+}
+
+#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(3) {
+    /* background: #585858; */
+    height: 100px;
+    padding-bottom: 10px;
+}
+
+#back {
+    height: 100%;
+    margin-left: -5px;
+    margin-bottom: 5px;
+    float: left;
+}
+
+#forward {
+    height: 100%;
+    margin-right: -5px;
+    float: right;
+}
+
+.fa-expand { color: rgb(216, 216, 216) }
+.fa-expand:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.slideBtn {
+    height: 155px;
+    overflow-y: scroll;
+    transition: height 2s;
+    /* scroll-behavior: smooth; */
+}
+
+.jbtn > div > div{
+    position: absolute;
+    top: 3px;
+    width: 354px;
+    z-index: 1;
+    background-color: rgba(81, 81, 81, 0.7);
+}
+
+.jbtn {
+    background-position: center; 
+    background-size: cover;
+    height: 25px;
+    margin: 3px -5px;
+    /* border: solid 1px */
+    overflow: hidden;
+}
+
+.slideThumb {
+    position: relative;
+    top: -60px;
+    filter: grayscale(100%);
+    width: 100%;
+}
+
+.jbtn:hover > div > .slideThumb {
+    filter: grayscale(0);
+}
+
+.jbtn:hover > div > div{
+    opacity: 0
 }
 
 /* #controller > .col-12:nth-child(1){

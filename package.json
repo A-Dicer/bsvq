@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "react-router-dom": "^5.1.2",
+    "react-scroll": "^1.7.16",
     "socket.io": "^2.0.3"
   }
 }

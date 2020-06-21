@@ -21,16 +21,12 @@ class Display extends Component {
   componentDidMount() {
     const io = require('socket.io-client')  
     socket = io() 
-    socket.on(this.state.proID, (payload) => {this.slideChange(payload)})
-    socket.emit('startCheck', time) // socket.io to check if started
+    socket.on(this.state.proID, (payload) => {this.setState({slidePos: payload})})
+    socket.on(`${this.state.proID}check`, (payload) => {this.setState({slidePos: payload})})
+    socket.emit('posCheck', {id: this.state.proID}) 
   }
 
   componentWillUnmount() {socket.emit('disconnect')}
-
-  slideChange(payload) {
-    console.log(payload)
-    this.setState({slidePos: payload})
-  }
 
 // -------------------------------------------- suffix ------------------------------------------------------
   suffix = (i) => {
