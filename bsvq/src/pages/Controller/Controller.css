@@ -56,6 +56,8 @@ body {color: #fff}
 
 #controller > .col-12 > .row > img {
     border-radius: 5px 5px 0 0;
+    height: 56.25%;
+    margin: 10px
 }
 
 #controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(3) {
