@@ -15,7 +15,7 @@ body {color: #fff}
 }
 
 #controlContainer > .row > .col-12:nth-child(2) > .row   {
-    width: 400px;
+    width: 350px;
     margin: 15px auto;
     padding-bottom: 10px;
     background-color: #a6abce;
@@ -83,7 +83,7 @@ body {color: #fff}
 .jbtn > div > div{
     position: absolute;
     top: 3px;
-    width: 354px;
+    width: 304px;
     z-index: 1;
     background-color: rgba(81, 81, 81, 0.7);
 }

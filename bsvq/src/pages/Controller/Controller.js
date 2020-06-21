@@ -174,7 +174,7 @@ btnScroll =(id)=> {
                           <div id={`slide${i}`}>
                             <img className="slideThumb" src={require(`../../assets/${this.state.proID}/Presentation/Slide${i+1}.jpg`)} style={i+1 ===this.state.slidePos ? {filter: `grayscale(0)`} : null }/> 
                             <div style={i+1 ===this.state.slidePos ? {display: `none`} : null }>
-                                Slide{i+1}
+                                Slide {i+1}
                             </div> 
                           </div>
                         </button>
