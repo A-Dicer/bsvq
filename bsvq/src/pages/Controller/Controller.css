@@ -7,128 +7,65 @@ body {color: #fff}
 }
 
 #controlContainer > .row > .col-12:nth-child(1){height: 150px}
-
-#controlContainer > .row > .col-12:nth-child(1) > img {
-    display: block;
-    flex: none;
-    margin: 0 auto;
-}
-
+#controlContainer > .row > .col-12:nth-child(1) > img {display: block; margin: 0 auto}
 #controlContainer > .row > .col-12:nth-child(2) > .row   {
     width: 350px;
     margin: 15px auto;
     padding-bottom: 10px;
-    background-color: #a6abce;
+    background-image: linear-gradient(to bottom right, #f8f9fa52, #a9a9a900);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 2px 2px 7px 0px #000;
 }
 
-.menu {
-    background: #555b85;
-    height: 5px;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #000;
-    border-top: solid 1px #000;
-}
-
-.carot {
-    position: absolute;
-    top: -19px;
-    left: 10px;
-    color: #555a85;
-    border: solid 1px #000;
-    height: 14px;
-    border-radius: 3px;
-    background: #fff;
-    cursor: pointer;
-}
-
-.carot:hover {
-    color: #8890d5;
-}
-
-#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(3) {
-    /* background: #585858; */
+#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(2) {
     height: 100px;
     padding-bottom: 10px;
 }
 
 #controller > .col-12 > .row > img {
     border-radius: 5px 5px 0 0;
+    border: none;
     height: 56.25%;
     margin: 10px
 }
 
-#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(3) {
-    /* background: #585858; */
-    height: 100px;
-    padding-bottom: 10px;
+#back {height: 100%; margin-left: -5px; float: left}
+#forward {height: 100%; margin-right: -5px; float: right}
+.dirBtn {box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5)}
+.dirBtn:disabled {box-shadow: none}
+.menu {
+    background: #15324e;
+    border-bottom: solid 1px #000;
+    border-top: solid 1px #000;
 }
+.slbtn {transition: height 1s}
+.slideBtn {overflow-y: scroll; margin-top: 10px; height: 130px}
+.slideTitle{position: absolute; left: 15px}
+.caret {margin-left: 6px; cursor: pointer}
+.caret:hover {color: #ccc}
+.jbtn {cursor: pointer; color: #ccc; width: fit-content}
+.jbtn:hover {color: #fff}
+.jbtn:hover .slideThumb {opacity: 1}
 
-#back {
-    height: 100%;
-    margin-left: -5px;
-    margin-bottom: 5px;
-    float: left;
-}
-
-#forward {
-    height: 100%;
-    margin-right: -5px;
-    float: right;
-}
-
-.fa-expand { color: rgb(216, 216, 216) }
-.fa-expand:hover {
-    color: #fff;
-    cursor: pointer;
-}
-
-.slideBtn {
-    height: 155px;
-    overflow-y: scroll;
-    transition: height 2s;
-    /* scroll-behavior: smooth; */
-}
-
-.jbtn > div > div{
+.slidePrev {
+    padding: 38px 0;
     position: absolute;
-    top: 3px;
-    width: 304px;
-    z-index: 1;
-    background-color: rgba(81, 81, 81, 0.7);
-}
-
-.jbtn {
-    background-position: center; 
-    background-size: cover;
-    height: 25px;
-    margin: 3px -5px;
-    /* border: solid 1px */
-    overflow: hidden;
+    font-size: 26px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
 }
 
 .slideThumb {
-    position: relative;
-    top: -60px;
-    filter: grayscale(100%);
+    position: absolute;
+    right: 18px;
+    width: 209px;
+    top: 13px; 
+    background-color: rgba(204, 204, 204, 0.4);
+}
+
+.slideThumb > img {
     width: 100%;
+    transition: opacity 300ms;
 }
-
-.jbtn:hover > div > .slideThumb {
-    filter: grayscale(0);
-}
-
-.jbtn:hover > div > div{
-    opacity: 0
-}
-
-/* #controller > .col-12:nth-child(1){
-    border-bottom: #000 solid 2px
-}
-#controller > .col-12:nth-child(4){
-    border-top: #000 solid 2px;
-    height: 100px;
-} */
-

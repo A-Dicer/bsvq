@@ -6,7 +6,7 @@ import {Slide} from "../../components/Slide";
 // import { faUserPlus, faSignInAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 import "./Display.css";
 let socket;
-const time = toString(new Date())
+// const time = toString(new Date())
 
 class Display extends Component {
 
@@ -36,6 +36,7 @@ class Display extends Component {
     if (j === 3 && k !== 13) return i + "rd";
     return i + "th";
   }
+
 // ----------------------------------------- Frontend Code -------------------------------------------------
   render() {
     return (
