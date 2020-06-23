@@ -128,11 +128,13 @@ hr {border-top: solid .1vw rgba(255, 255, 255, .2)}
     #controller{padding-bottom: 4vw}
     body{font-size: 12px}
     .arrow {font-size: 5vw}
-    .arrow > svg {font-size: 5vw}
+    .arrow > svg {font-size: 11.5vw; position: absolute;}
     .menu{font-size: 3.5vw}
     #slideBtn{padding-top: 1.6vw}
     .thumb{padding-top: 2.8vw; width: 24.3vw}
     .current{width: 34vw!important; padding: 0}
+    .fa-arrow-alt-circle-right {right: 5vw}
+    .fa-arrow-alt-circle-left {left: 5vw}
     .col-sm-4 > .row > .col-12:nth-child(2), .col-sm-4 > .row > .col-12:nth-child(3) {
         display: none
     }
