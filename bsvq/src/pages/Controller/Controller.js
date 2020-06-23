@@ -82,6 +82,7 @@ class Controller extends Component {
   btnScroll =(id)=> {
     const elmnt = document.getElementById(`slide${id}`);
     if(id > 4 || id < this.state.slideAmt - 3) {
+      console.log("ran")
       elmnt.scrollIntoView({behavior: "smooth", inline: "center"});
     }
   }
@@ -194,7 +195,7 @@ class Controller extends Component {
               </div>
               {/* ------------------------- slideSelect --------------------------------------- */}
               <div className="col-12">
-                <div className="row slideSelect" style={{height: this.state.caret ? '0' : window.innerWidth < 575 ?'21vw':'12vw'}}>
+                <div className="row slideSelect" style={{height: this.state.caret ? '0' : window.innerWidth < 575 ?'21vw':'12.5vw'}}>
                   <div id="slideBtn" className="col-12" style={{display: this.state.caret ? 'none' : null}}>
                     {
                       this.state.slideArr.map((name, i) =>    
