@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {Slide} from "../../components/Slide";
 import API from "../../utils/API";
-import { Element , Events, animateScroll as scroll, scroller } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft, faCaretSquareDown, faCaretSquareUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faArrowAltCircleRight, faCaretSquareDown, faCaretSquareUp } from "@fortawesome/free-regular-svg-icons";
+import { faTimesCircle, faExpand} from '@fortawesome/free-solid-svg-icons';
 import "./Controller.css";
 let socket;
 
@@ -18,6 +18,7 @@ class Controller extends Component {
       caret: true,
       slideHover: 1,
       prevOpacity: 0,
+      full: false
     }
   }
 
@@ -51,8 +52,6 @@ class Controller extends Component {
   }
 
   componentWillUnmount() {
-    Events.scrollEvent.remove('begin');
-    Events.scrollEvent.remove('end');
     socket.emit('disconnect')
   }
 
@@ -67,6 +66,10 @@ class Controller extends Component {
   keyCall =(event)=> {
     if(event.key === 'ArrowLeft') this.slideChange(`back`);
     if(event.key === 'ArrowRight') this.slideChange(`forward`);
+    if(event.key === 'ArrowDown') this.setState({caret: false})
+    if(event.key === 'ArrowUp') this.setState({caret: true})
+    if(event.key === 'f' || event.key === 'F') this.setState({full: true})
+    if(event.key === 'Escape') this.setState({full: false})
   }
 
 // -------------------------------------------- btnCall -----------------------------------------------------
@@ -77,11 +80,10 @@ class Controller extends Component {
 
 // ------------------------------------------- btnScroll ----------------------------------------------------
   btnScroll =(id)=> {
-    scroller.scrollTo(`slide${id}`, {
-      containerId: 'slideBtn',
-      smooth: true,
-      offset: -42
-    })
+    const elmnt = document.getElementById(`slide${id}`);
+    if(id > 4 || id < this.state.slideAmt - 3) {
+      elmnt.scrollIntoView({behavior: "smooth", inline: "center"});
+    }
   }
 
 // ------------------------------------------ slideChange ---------------------------------------------------
@@ -117,96 +119,104 @@ class Controller extends Component {
     return (
       <div className="container-fluid" id="controlContainer"> 
         <div className="row">
-          {/* -------------------------------- headerImg -------------------------------------- */}
-          <div className="col-12">
-            <img id="logo" src={require(`../../assets/images/bsdv_logo_transparent.png`)}/> 
-          </div>
           {/* -------------------------------- controler -------------------------------------- */}
           <div className="col-12">
             <div id="controller" className="row">
-              {/* ----------------------------- slides ---------------------------------------- */}
-              <div className="col-12">
-                <Slide proID={this.state.proID} slidePos={this.state.slidePos}/>
+              {/* ---------------------------- logoMobile-------------------------------------- */}
+              <div className="col-12 mb text-center">
+                <img id="logo" src={require(`../../assets/images/bsdv_logo_transparent.png`)}/> 
+                <hr/>
               </div>
-              {/* --------------------------- empty menu -------------------------------------- */}
-              
-              {/* --------------------------- back button-------------------------------------- */}
-              <div className="col-12">
-                <button 
-                  className="col-6 btn btn-primary dirBtn" 
-                  onClick={this.btnCall} 
-                  disabled={this.state.slidePos <= 1 ? true : false} 
-                  id="back"
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} /> Back
-                </button>
-                {/* ----------------------- forward button ------------------------------------ */}
-                <button 
-                  className="col-6 btn btn-primary dirBtn" 
-                  onClick={this.btnCall} 
-                  disabled={this.state.slidePos >= this.state.slideAmt ? true : false}
-                  id='forward'
-                >
-                  Forward <FontAwesomeIcon icon={faChevronRight} />
-                </button>
-              </div>
-              {/* ------------------------------ menu ----------------------------------------- */}
-              <div 
-                className="col-12 text-right menu" 
-                onClick={()=>{
-                  let pos = !this.state.caret
-                  this.setState({caret: pos})
-                  }} 
-              >
-                <div className='slideTitle'>
-                  Current Slide: Slide {this.state.slidePos} 
-                </div>  
-                Slide Menu <FontAwesomeIcon 
-                className="caret"
-                icon={this.state.caret ? faCaretSquareDown : faCaretSquareUp} />
-              </div>
-              {/* ---------------------------- slideBtn --------------------------------------- */}
-              <div className="col-12 slbtn" style={{height: this.state.caret ? '0' : '135px'}}>
-                
-                <Element id="slideBtn" className="row slideBtn">
-                  {this.state.slideArr.map((name, i) =>    
-                    <Element className="col-12" key={`slide${i+1}`} name={`slide${i+1}`}>
-                      <div
-                        className={`jbtn`}  
-                        onClick={()=>{
-                          this.btnScroll(i+1)
-                          this.setState({slidePos: i+1})
-                          socket.emit(`slideChange`, {id: this.state.proID, slidePos: i+1})
-                        }}
-                        onMouseOver={()=>{this.setState({slideHover: i+1, prevOpacity: 1})}}
-                        onMouseOut={()=>{
-                          this.setState({prevOpacity: 0}) 
-                        }}
-
-                        style={i+1 === this.state.slidePos ?{fontSize: `24px`, color: '#fff', cursor: 'defualt'}:null}
-                      > 
-                        Slide {i+1}
-                      </div>               
-                    </Element>
-                  )}
-                </Element>
-                {/* --------------------------- SlideThumb -------------------------------------- */}
-                <div className='slideThumb'>
-                  {!this.state.prevOpacity ? <div className='slidePrev'> Slide Preview</div> : null}
-                  <img 
-                    src={
-                        this.state.slideHover 
-                        ? require(`../../assets/${this.state.proID}/Presentation/Slide${this.state.slideHover}.jpg`)
-                        : null
-                      }
-                    style={{opacity: this.state.prevOpacity}}
+              {/* -------------------------- col-8/leftside ----------------------------------- */}
+              <div className="col-sm-8">
+                <div id="proName">Project Name: {this.state.proID}</div>
+                <div id="updated">Updated: (date updated)</div>
+                <div className={`row ${this.state.full ? 'expandBackground' : ''}`}>
+                  <img className={`slide ${this.state.full ? 'expandImage' : ''}`} src={require(`../../assets/${this.state.proID}/Presentation/Slide${this.state.slidePos}.jpg`)}/>
+                  <FontAwesomeIcon 
+                    icon={this.state.full ?faTimesCircle : faExpand} 
+                    className="fullBtn dt"
+                    onClick={()=> {
+                      let pos = !this.state.full
+                      this.setState({full: pos})
+                    }}
                   />
-                </div>
+                </div> 
               </div>
-            {/* ----------------------------------------------------------------------------- */}
+
+              {/* ------------------------- col-4/rightside ----------------------------------- */}
+              <div className="col-sm-4">
+                <div className='row'>
+                  {/* ------------------------- bsLogo ---------------------------------------- */}
+                  <div className="col-12 dt text-center">
+                    <img id="logo" src={require(`../../assets/images/bsdv_logo_transparent.png`)}/> 
+                    <hr/>
+                  </div>
+                  {/* ------------------------ nextSlide -------------------------------------- */}
+                  <div className="col-12">
+                    Next slide
+                  </div>
+                  <div id="slideNext" className="col-12">
+                      { this.state.slidePos +1 <= this.state.slideAmt
+                        ?<Slide proID={this.state.proID} slidePos={this.state.slidePos +1} />
+                        :<div className="row">
+                          <img className="slide" style={{ opacity: 0}} src={require(`../../assets/images/blank.png`)}/> 
+                         </div>
+                      }
+                    <hr />
+                  </div>
+                  {/* ---------------------- slideControls ------------------------------------ */}
+                  <div className={`col-12 arrow text-center`}>                                      
+                    <FontAwesomeIcon 
+                      icon={faArrowAltCircleLeft} 
+                      className={`${this.state.slidePos <= 1 ? '' : 'clickable'}`}
+                      onClick={()=> this.state.slidePos <= 1 ? null : this.slideChange('back')}
+                    />
+                    Slide {this.state.slidePos} of {this.state.slideAmt}
+                    <FontAwesomeIcon 
+                      icon={faArrowAltCircleRight}
+                      className={`${this.state.slidePos >= this.state.slideAmt ? null : 'clickable'}`} 
+                      onClick={()=> this.state.slidePos >= this.state.slideAmt ? null : this.slideChange('forward')}  
+                    />
+                  </div> 
+                  {/* ----------------------- slideMenu --------------------------------------- */}
+                  <div className="col-12 menu text-center">
+                    View all slides <FontAwesomeIcon 
+                      icon={this.state.caret ? faCaretSquareDown : faCaretSquareUp}
+                      className="caret"
+                      onClick={()=>{
+                        let pos = !this.state.caret
+                        this.setState({caret: pos})
+                        }} 
+                    />
+                  </div>
+                </div>             
+              </div>
+              {/* ------------------------- slideSelect --------------------------------------- */}
+              <div className="col-12">
+                <div className="row slideSelect" style={{height: this.state.caret ? '0' : window.innerWidth < 575 ?'21vw':'12vw'}}>
+                  <div id="slideBtn" className="col-12" style={{display: this.state.caret ? 'none' : null}}>
+                    {
+                      this.state.slideArr.map((name, i) =>    
+                        <div className={`thumb ${this.state.slidePos === i+1 ? 'current' :''}`} key={`slide${i+1}`} id={`slide${i+1}`}>
+                          <img 
+                            src={require(`../../assets/${this.state.proID}/Presentation/Slide${i+1}.jpg`)} 
+                            onClick={()=>{
+                              this.btnScroll(i+1)
+                              this.setState({slidePos: i+1})
+                              socket.emit(`slideChange`, {id: this.state.proID, slidePos: i+1})
+                            }}
+                          />             
+                        </div>
+                      )
+                    }
+                  </div>
+                </div>
+              </div>  
+              {/* ----------------------------------------------------------------------------- */}
             </div>
           </div>
-        {/* --------------------------------------------------------------------------------- */}
+          {/* --------------------------------------------------------------------------------- */}
         </div>  
       </div>
     );

@@ -1,71 +1,139 @@
-body {color: #fff}
-#controlContainer {
-    height: 100vh;
+body {
+    color: #fff; 
+    font-size: 1.6vw;
     background-image: url('../../assets/images/background.jpg') ;
     background-position: center top; 
     background-repeat: no-repeat; 
 }
+hr {border-top: solid .1vw rgba(255, 255, 255, .2)}
 
-#controlContainer > .row > .col-12:nth-child(1){height: 150px}
-#controlContainer > .row > .col-12:nth-child(1) > img {display: block; margin: 0 auto}
-#controlContainer > .row > .col-12:nth-child(2) > .row   {
-    width: 350px;
-    margin: 15px auto;
-    padding-bottom: 10px;
-    background-image: linear-gradient(to bottom right, #f8f9fa52, #a9a9a900);
-    border-radius: 10px;
+/* ---------------------- controller --------------------- */
+#controller {
+    margin: 1.5vw;
+    background-image: linear-gradient(to bottom right, #5e82a0, #183f60);
+    border-radius: 1vw;
     overflow: hidden;
-    box-shadow: 2px 2px 7px 0px #000;
+    box-shadow: 0.2vw 0.2vw 0.5vw 0px rgba(0, 0, 0, .5);
 }
 
-#controlContainer > .row > .col-12:nth-child(2) > .row > .col-12:nth-child(2) {
-    height: 100px;
-    padding-bottom: 10px;
+/* ------------------- col-8/left side ------------------- */
+#controller > .col-sm-8 {
+    border-right: solid .1vw rgba(255, 255, 255, .2);
+    margin: .7vw 0;
 }
+#controller > .col-sm-8 > .row {padding-bottom: 1vw}
+#controller > .col-sm-8 > #proName{ position: relative; top: 0; left: 0}
+#controller > .col-sm-8 > #updated{ position: absolute; top: 0; right: 1vw}
+#controller > .col-sm-8 > .row:hover > .fullBtn {opacity: 1}
+.expandBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0!important;
+    z-index: 3;
+    margin: 0;
+    height: 100vh;
+    background-color: #000;
+    align-items: center;   
+}
+.expandImage {
+    margin: 0!important;
+    padding: 0!important;
+    box-shadow: none;
+    height: calc(100vw * .5625)!important;
+}
+.fullBtn {
+    color: rgb(111, 111, 111)!important;
+    position: absolute;
+    top: 3.5vw;
+    right: 1.8vw;
+    opacity: 0;
+    transition: opacity 500ms;
+    z-index: 5;
+}
+.fullBtn:hover {
+    color: rgb(0, 115, 255)!important;
+    opacity: 1;
+    cursor: pointer;
+}
+.fa-times-circle {top: 1vw}
+.fa-times-circle:hover {color: rgb(196, 89, 89)!important}
 
-#controller > .col-12 > .row > img {
-    border-radius: 5px 5px 0 0;
+/* ----------------- slideImg/both sides ----------------- */
+#controller > .col-sm-8 > .row > img, #controller > .col-sm-4 > .row > .col-12 > .row > img{
     border: none;
     height: 56.25%;
-    margin: 10px
+    margin-top: .2vw;
+    margin-bottom: .2vw;
 }
 
-#back {height: 100%; margin-left: -5px; float: left}
-#forward {height: 100%; margin-right: -5px; float: right}
-.dirBtn {box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5)}
-.dirBtn:disabled {box-shadow: none}
-.menu {
-    background: #15324e;
-    border-bottom: solid 1px #000;
-    border-top: solid 1px #000;
+/* ------------------ col-4/right side ------------------- */
+#controller > .col-sm-4 {margin: .7vw 0}
+#logo {width: 100%; margin-bottom: -1.8vw}
+#controller > .col-sm-4 > .row > .col-12 > .row > img{
+    box-shadow: none;
+    border: solid .1vw rgba(255, 255, 255, .5);
 }
-.slbtn {transition: height 1s}
-.slideBtn {overflow-y: scroll; margin-top: 10px; height: 130px}
-.slideTitle{position: absolute; left: 15px}
+.arrow {font-size: 2vw;}
+.fa-arrow-alt-circle-left, .fa-arrow-alt-circle-right {
+    position: relative;
+    top: .1vw;
+    font-size: 2vw;
+    margin: 0 1vw;
+    color: rgb(131, 131, 131)
+}
+.clickable:hover {color: #ccc}
+.clickable {color: #fff; cursor: pointer}
+.menu {font-size: 1.5vw;}
 .caret {margin-left: 6px; cursor: pointer}
 .caret:hover {color: #ccc}
-.jbtn {cursor: pointer; color: #ccc; width: fit-content}
-.jbtn:hover {color: #fff}
-.jbtn:hover .slideThumb {opacity: 1}
 
-.slidePrev {
-    padding: 38px 0;
-    position: absolute;
-    font-size: 26px;
-    margin: 0 auto;
-    width: 100%;
-    text-align: center;
+/* --------------------- slideSelect --------------------- */
+.slideSelect {padding: 0 1vw; transition: height 500ms}
+.slideSelect > .col-12 {
+    border-top: solid .1vw rgba(255, 255, 255, .2);
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
 }
-
 .slideThumb {
-    position: absolute;
-    right: 18px;
-    width: 209px;
-    top: 13px; 
+    right: 1vw;
+    width: 20vw;
+    top: 0; 
     background-color: rgba(204, 204, 204, 0.4);
 }
+.thumb {
+    width: 14.3vw;
+    margin: 1vw .5vw;
+    flex: 0 0 auto;
+    padding-top: .8vw;
+    cursor: pointer;
 
-.slideThumb > img {
-    width: 100%;
-    transition: opacity 300ms;
 }
+.thumb > img {width: 100%}
+.current {
+    border: solid .2vw #343a40;
+    box-shadow: 0vw 0vw 1vw 0vw #cddafb;
+    width: 18vw;
+    height: fit-content;
+    padding-top: 0
+}
+
+/* ------------------------ mobile ----------------------- */
+.mb {display: none}
+@media only screen and (max-width: 575px) {
+    .mb {display: block}
+    .dt{display: none}
+    #controller{padding-bottom: 4vw}
+    body{font-size: 12px}
+    .arrow {font-size: 5vw}
+    .arrow > svg {font-size: 5vw}
+    .menu{font-size: 3.5vw}
+    #slideBtn{padding-top: 1.6vw}
+    .thumb{padding-top: 2.8vw; width: 24.3vw}
+    .current{width: 34vw!important; padding: 0}
+    .col-sm-4 > .row > .col-12:nth-child(2), .col-sm-4 > .row > .col-12:nth-child(3) {
+        display: none
+    }
+  }

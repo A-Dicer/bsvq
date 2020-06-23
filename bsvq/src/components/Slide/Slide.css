@@ -1,4 +1,4 @@
-#slide {
+.slide {
     border: solid .2vw #000;
     box-shadow: 0.2vw 0.2vw 0.8vw #000;
     transition: ease-in-out opacity 1s;
