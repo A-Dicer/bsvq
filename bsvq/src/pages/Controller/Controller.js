@@ -23,6 +23,8 @@ class Controller extends Component {
   }
 
   componentDidMount() {
+    document.body.style.backgroundImage = `url(${require('../../assets/images/background.jpg')})`;
+
     //event for keydown -------------
     document.addEventListener("keydown", this.keyCall);
    
@@ -81,10 +83,7 @@ class Controller extends Component {
 // ------------------------------------------- btnScroll ----------------------------------------------------
   btnScroll =(id)=> {
     const elmnt = document.getElementById(`slide${id}`);
-    if(id > 4 || id < this.state.slideAmt - 3) {
-      console.log("ran")
-      elmnt.scrollIntoView({behavior: "smooth", inline: "center"});
-    }
+    elmnt.scrollIntoView({behavior: "smooth", inline: "center"}); 
   }
 
 // ------------------------------------------ slideChange ---------------------------------------------------

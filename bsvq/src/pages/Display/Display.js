@@ -19,14 +19,17 @@ class Display extends Component {
   }
   
   componentDidMount() {
-    const io = require('socket.io-client')  
+    const io = require('socket.io-client') 
+     
     socket = io() 
     socket.on(this.state.proID, (payload) => {this.setState({slidePos: payload})})
     socket.on(`${this.state.proID}check`, (payload) => {this.setState({slidePos: payload})})
-    socket.emit('posCheck', {id: this.state.proID}) 
+    socket.emit('posCheck', {id: this.state.proID})    
   }
 
-  componentWillUnmount() {socket.emit('disconnect')}
+  componentWillUnmount() {
+    socket.emit('disconnect')
+  }
 
 // -------------------------------------------- suffix ------------------------------------------------------
   suffix = (i) => {
@@ -40,7 +43,7 @@ class Display extends Component {
 // ----------------------------------------- Frontend Code -------------------------------------------------
   render() {
     return (
-      <div className="container-fluid"> 
+      <div className="container-fluid" id="display"> 
         <div className="row">
           <div className="col-12">
             <Slide proID={this.state.proID} slidePos={this.state.slidePos}/>
