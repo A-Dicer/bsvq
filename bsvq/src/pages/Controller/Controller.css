@@ -125,6 +125,7 @@ hr {border-top: solid .1vw rgba(255, 255, 255, .2)}
     .mb {display: block}
     .dt{display: none}
     #controller{padding-bottom: 4vw}
+    #controller > .col-sm-8 {border: none}
     body{font-size: 12px}
     .arrow {font-size: 5vw}
     .arrow > svg {font-size: 11.5vw; position: absolute;}
