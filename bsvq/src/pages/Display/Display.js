@@ -43,7 +43,7 @@ class Display extends Component {
     if(this.state.slidePos > this.state.slidePrev) color = 'green'
     else color = 'red'
     
-    for(let i = 0; i<9; i++){
+    for(let i = 0; i<13; i++){
       let number
       if (i%2 == 0) number = 0
       setTimeout(() => {
@@ -70,7 +70,7 @@ class Display extends Component {
       let pos = !this.state.mode
       this.setState({mode: pos})
   }
-  
+
 // ----------------------------------------- Frontend Code -------------------------------------------------
   render() {
     return (
