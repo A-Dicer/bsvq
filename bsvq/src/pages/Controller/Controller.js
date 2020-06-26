@@ -66,12 +66,16 @@ class Controller extends Component {
 
 // -------------------------------------------- keyCall -----------------------------------------------------
   keyCall =(event)=> {
-    if(event.key === 'ArrowLeft') this.slideChange(`back`);
-    if(event.key === 'ArrowRight') this.slideChange(`forward`);
-    if(event.key === 'ArrowDown') this.setState({caret: false})
-    if(event.key === 'ArrowUp') this.setState({caret: true})
-    if(event.key === 'f' || event.key === 'F') this.setState({full: true})
-    if(event.key === 'Escape') this.setState({full: false})
+    switch (event.key.toLowerCase()) {
+      case "arrowleft": this.slideChange(`back`); break
+      case "arrowright": this.slideChange(`forward`); break
+      case "arrowdown": this.setState({caret: false}); break
+      case "arrowup": this.setState({caret: true}); break
+      case "arrowdown": this.setState({caret: false}); break
+      case "f": this.setState({full: true}); break
+      case "escape": this.setState({full: false}); break
+      default: break
+    }
   }
 
 // -------------------------------------------- btnCall -----------------------------------------------------

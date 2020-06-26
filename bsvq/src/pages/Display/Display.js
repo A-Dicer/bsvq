@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import {Slide} from "../../components/Slide";
-// import API from "../../utils/API";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-// import { faUserPlus, faSignInAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 import "./Display.css";
 let socket;
-// const time = toString(new Date())
 
 class Display extends Component {
 
@@ -14,15 +9,24 @@ class Display extends Component {
     super(props);
     this.state = {
       proID: props.match.params.id, 
-      slidePos: 1 
+      slidePos: 1,
+      slidePrev: '',
+      mode: true,
+      alertStyle: {backgroundColor: 'red', opacity: '0'}
     }
   }
   
   componentDidMount() {
+
+    //event for keydown -------------
+    document.addEventListener("keydown", this.keyCall);
+
     const io = require('socket.io-client') 
-     
     socket = io() 
-    socket.on(this.state.proID, (payload) => {this.setState({slidePos: payload})})
+    socket.on(this.state.proID, (payload) => {
+      this.setState({slidePos: payload}) 
+      this.slideAlert()
+    })
     socket.on(`${this.state.proID}check`, (payload) => {this.setState({slidePos: payload})})
     socket.emit('posCheck', {id: this.state.proID})    
   }
@@ -31,21 +35,50 @@ class Display extends Component {
     socket.emit('disconnect')
   }
 
-// -------------------------------------------- suffix ------------------------------------------------------
-  suffix = (i) => {
-    let j = i % 10, k = i % 100;
-    if (j === 1 && k !== 11) return i + "st";
-    if (j === 2 && k !== 12) return i + "nd";
-    if (j === 3 && k !== 13) return i + "rd";
-    return i + "th";
+// ----------------------------------------- slideAlert -----------------------------------------------------  
+  slideAlert =()=>{
+    let color
+    let time = 0;
+
+    if(this.state.slidePos > this.state.slidePrev) color = 'green'
+    else color = 'red'
+    
+    for(let i = 0; i<9; i++){
+      let number
+      if (i%2 == 0) number = 0
+      setTimeout(() => {
+        let pos = {backgroundColor: color, opacity: number}
+        this.setState({alertStyle: pos})
+      }, time);
+      time += 200;
+    }
+    this.setState({slidePrev: this.state.slidePos})
   }
 
+  // ----------------------------------------- keyCall ------------------------------------------------------
+  keyCall =(event)=> {
+    if(event.key === 'c' || event.key === 'C' ) this.setState({mode: false});
+    if(event.key === 'd' || event.key === 'D') this.setState({mode: true});
+  }
+
+// ------------------------------------------- backward -----------------------------------------------------
+  backward =()=>{
+      
+  }
+// --------------------------------------------- mode -------------------------------------------------------
+  mode =()=>{
+      let pos = !this.state.mode
+      this.setState({mode: pos})
+  }
+  
 // ----------------------------------------- Frontend Code -------------------------------------------------
   render() {
     return (
-      <div className="container-fluid" id="display"> 
+      <div className="container-fluid" id={this.state.mode ? "display" : "cue"}> 
         <div className="row">
           <div className="col-12">
+            <div className="slideNumber" style={this.state.mode ? {display: 'none'} : null}>{`Slide ${this.state.slidePos}`}</div>
+            <div className="alertDiv" style={this.state.mode ? {display: 'none'} : this.state.alertStyle}></div>
             <Slide proID={this.state.proID} slidePos={this.state.slidePos}/>
           </div>
         </div>  
