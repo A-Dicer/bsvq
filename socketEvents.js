@@ -19,7 +19,7 @@ exports = module.exports = function(io) {
   socket.on('posCheck', function(data){ 
     socket.emit(
       `${data.id}check`, 
-      projects[data.id] ? projects[data.id].pos : 1
+      projects[data.id] ? projects[data.id].pos : 0
     )
   });
 

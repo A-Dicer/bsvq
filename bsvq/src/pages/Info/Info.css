@@ -1,0 +1,51 @@
+#manager {
+    color: #fff;
+    font-size: 18px;
+}
+#manager > .row {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+#header {height: 140px}
+#header .col-sm-6 {text-align: center}
+#header #logo {max-width: 360px; margin-bottom: 0}
+#header input {
+    background: linear-gradient(45deg, #007bff59, transparent);
+    color: #fff;
+    transition:  all 2s;  
+}
+#header .input-group {margin-top: 20px;}
+.headLink:hover {cursor: pointer; background-color: #ccc}
+
+
+
+#main {margin-top: 20px; height: 500px; text-overflow: ellipsis;}
+#main > .row:nth-child(1) {
+    border: solid #9c9c9c 1px;
+    border-radius: 5px 5px 0 0;
+    background-color: #545454;
+}
+#main > .row:nth-child(2) {
+    padding: 0 10px;
+    border: solid #9c9c9c 1px;
+    overflow: scroll;
+    height: 250px;
+    border-radius: 0 0 5px 5px;
+}
+
+#main .project {
+    border-bottom: solid #9c9c9c 1px;
+    padding: 9px 9px;
+    text-align: left;
+}
+#main .project:last-child{border: none}
+#main svg:hover {
+    cursor: pointer;
+    color: #9c9c9c;
+}
+/* ------------------------ mobile ----------------------- */
+
+@media only screen and (max-width: 575px) {
+    #header .input-group {margin-top: -20px}
+}
