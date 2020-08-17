@@ -16,7 +16,7 @@ class Info extends Component {
       projName: '',
       projFiles: false,
       loading: 0,
-      password: true,
+      password: false,
       passwordInput: '',
       style: {search: {width: '65%'}},
       addDisplay: false
