@@ -14,11 +14,12 @@ class Info extends Component {
     this.state = {
       proID: props.match.params.id,
       projName: '',
-      projFiles: null,
+      projFiles: false,
       loading: 0,
-      password: false,
+      password: true,
       passwordInput: '',
-      style: {search: {width: '65%'}}
+      style: {search: {width: '65%'}},
+      addDisplay: false
     }
   }
   
@@ -73,9 +74,16 @@ class Info extends Component {
 
 // ----------------------------------------- deleteProject --------------------------------------------------
   deleteProject = (data) => {
-   API.deleteFile({data: data}).then(res => this.findAll())
+    console.log(data)
+    if(window.confirm(`Are you sure you want to delete ${data}`)) API.deleteFile({data: data}).then(res => this.findAll());
+
   }
 
+// --------------------------------------- addProjectDisplay ------------------------------------------------
+  addProjectDisplay=()=>{
+    let display = !this.state.addDisplay
+    this.setState({addDisplay: display})
+  }
 // ------------------------------------------ addProject ----------------------------------------------------
   addProject = (event) => {
     console.log(event)
@@ -97,7 +105,7 @@ class Info extends Component {
       //reset form info
       document.getElementById('uploadForm').reset();
       this.setState({projName: ''})
-    
+      this.setState({addDisplay: false})
       //reload projects
       this.findAll()
       
@@ -117,7 +125,7 @@ class Info extends Component {
     return (
       <div className="container-fluid" id="manager"> 
         <div className="row">
-          <div className="col-12" >
+          <div className="col-12"  >
             <div className="row align-items-center" id="header">
               <div className="col-sm-6">
                 <img id="logo" src={require(`../../assets/images/bsdv_logo_transparent.png`)}  /> 
@@ -126,6 +134,7 @@ class Info extends Component {
               !this.state.password
               ? 
               <div className="col-sm-6">
+                Locked
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text"><FontAwesomeIcon icon={faKey} /></span>
@@ -142,7 +151,7 @@ class Info extends Component {
               : 
               <div className="col-sm-6">
                 <div className="input-group">
-                  <div className="input-group-prepend">
+                  <div className="input-group-prepend" onClick={this.addProjectDisplay}>
                     <span className="input-group-text headLink" onClick={()=>this.state.style.search.width==='0' ? this.styleChange('search', {width: '65%'}):this.styleChange('search', {width: '0', padding: '0'})}><FontAwesomeIcon icon={faFileUpload}/></span>
                   </div>
                   <div className="input-group-prepend">
@@ -160,7 +169,7 @@ class Info extends Component {
             </div>
           </div>
           
-          <div className="col-12" id="main">
+          <div className="col-12" id="main" style={!this.state.addDisplay ? {display: 'block'}:{display: 'none'}}>
 
             <div className="row"> 
               <div className="col-3">Project</div>
@@ -185,7 +194,7 @@ class Info extends Component {
                         <div className="col-2"><FontAwesomeIcon icon={faImages}/> {item.slides.length}</div>
                         <div className='col-3'>{moment(item.updated).format('MM/DD/YY')}</div>
                         <div className='col-2 text-align-center'><FontAwesomeIcon icon={faMobile} onClick={()=> window.open(`../controls/${item.name}`)} /> / <FontAwesomeIcon icon={faDesktop} onClick={()=> window.open(`../display/${item.name}`)} /></div> 
-                        <div className='col-2'><FontAwesomeIcon icon={faTrashAlt} onClick={()=> this.deleteProject(item.name)}/></div>
+                        <div className='col-2' style={this.state.password ? {display: 'block'}: {display: 'none'}}><FontAwesomeIcon icon={faTrashAlt} onClick={()=> this.deleteProject(item.name)}/></div>
                     </div>
                   </div>
                 
@@ -198,7 +207,24 @@ class Info extends Component {
           }
             </div>
           </div>
-            
+
+          <div className="col-md-12" id="main" style={this.state.addDisplay ? {display: 'block'}:{display: 'none'}}>
+            <div className="card" style={{color: "#000"}}>
+              <div className="card-body" >
+                <h3>Add New Project</h3>
+                <form id='uploadForm'>
+                  <div className="form-group">
+                    <input className="form-control form-control-sm" onChange={this.inputChange} type="text" value={this.state.projName} placeholder="Project Name"/>
+                  </div>
+                  <div className="form-group">
+                    <input type="file" className="form-control-file" accept="image/x-png,image/gif,image/jpeg" multiple onChange={this.onChangeHandler}/>
+                  </div>
+                  <button type="submit" className="btn btn-primary mb-2" disabled={this.state.projName && this.state.projFiles ? false : true} onClick={this.addProject}>Submit</button>
+                  <button type="submit" className="btn btn-secondary mb-2" onClick={this.addProjectDisplay}>Cancel</button>
+                </form>
+              </div>
+            </div>
+          </div> 
           
         </div>  
       </div>
@@ -207,20 +233,3 @@ class Info extends Component {
 }
 
 export default Info;
-
-                // <div className="col-md-4">
-                //   <div className="card" style={{color: "#000"}}>
-                //     <div className="card-body" >
-                //       <h3>Add New Project</h3>
-                //       <form id='uploadForm'>
-                //         <div className="form-group">
-                //           <input className="form-control form-control-sm" onChange={this.inputChange} type="text" value={this.state.projName} placeholder="Project Name"/>
-                //         </div>
-                //         <div className="form-group">
-                //           <input type="file" className="form-control-file" accept="image/x-png,image/gif,image/jpeg" multiple onChange={this.onChangeHandler}/>
-                //         </div>
-                //         <button type="submit" className="btn btn-primary mb-2" onClick={this.addProject}>Submit</button>
-                //       </form>
-                //     </div>
-                //   </div>
-                // </div> 

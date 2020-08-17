@@ -22,16 +22,19 @@
 
 #main {margin-top: 20px; height: 500px; text-overflow: ellipsis;}
 #main > .row:nth-child(1) {
-    border: solid #9c9c9c 1px;
+    border: solid #000000 1px;
     border-radius: 5px 5px 0 0;
-    background-color: #545454;
+    background-color: #747474;
+    
 }
 #main > .row:nth-child(2) {
     padding: 0 10px;
-    border: solid #9c9c9c 1px;
+    background: rgba(255, 255, 255, 0.288);
+    border: solid #000 1px;
     overflow: scroll;
-    height: 250px;
+    /* height: 250px; */
     border-radius: 0 0 5px 5px;
+    overflow: hidden;
 }
 
 #main .project {
@@ -44,6 +47,8 @@
     cursor: pointer;
     color: #9c9c9c;
 }
+
+#main button {margin: 0 2px}
 /* ------------------------ mobile ----------------------- */
 
 @media only screen and (max-width: 575px) {
