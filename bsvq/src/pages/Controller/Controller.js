@@ -134,7 +134,7 @@ class Controller extends Component {
               {/* -------------------------- col-8/leftside ----------------------------------- */}
               <div className="col-sm-8">
                 <div id="proName">Project Name: {this.state.proID}</div>
-                <div id="updated">Updated: (date updated)</div>
+                {/* <div id="updated">Updated: (date updated)</div> */}
                 <div className={`row ${this.state.full ? 'expandBackground' : ''}`}>
                   <img className={`slide ${this.state.full ? 'expandImage' : ''}`} src={require(`../../assets/${this.state.proID}/Presentation/Slide${this.state.slidePos}.jpg`)}/>
                   <FontAwesomeIcon 
