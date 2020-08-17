@@ -28,7 +28,7 @@ class Receiver extends Component {
       <div className="container-fluid"> 
         <div className="row">
           <div className="col-12">
-            Big Shuolders Vitrual Cue
+            Receiver
           </div>
         </div>  
       </div>
