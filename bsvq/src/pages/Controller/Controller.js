@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Slide} from "../../components/Slide";
 import API from "../../utils/API";
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft, faArrowAltCircleRight, faCaretSquareDown, faCaretSquareUp } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle, faExpand} from '@fortawesome/free-solid-svg-icons';
@@ -12,9 +13,8 @@ class Controller extends Component {
     super(props);
     this.state = {
       proID: props.match.params.id, 
-      slidePos: 1,
-      slideAmt: false,
-      slideArr: [],
+      project: {slides: []},
+      slidePos: 0,
       caret: true,
       slideHover: 1,
       prevOpacity: 0,
@@ -45,23 +45,17 @@ class Controller extends Component {
     })
 
     //sends id to check slide number on page load
-    socket.emit('posCheck', {id: this.state.proID}) 
-    API.slideAmt({data: this.state.proID})
+    
+    API.findOne({data: this.state.proID})
       .then(res => { 
-        this.setState({slideAmt: res.data.amt})
-        this.buildArr(res.data.amt)
+        console.log(res)
+        this.setState({project: res.data.project}) 
+        socket.emit('posCheck', {id: this.state.proID}) 
       })
   }
 
   componentWillUnmount() {
     socket.emit('disconnect')
-  }
-
-// -------------------------------------------- buildArr ----------------------------------------------------
-  buildArr(num){
-      let arr = []
-      for(let i=0; i < num; i++){arr.push('')}
-      this.setState({slideArr: arr})
   }
 
 // -------------------------------------------- keyCall -----------------------------------------------------
@@ -94,8 +88,8 @@ class Controller extends Component {
   slideChange =(id)=> {
 
     //stops anything that is less than 1 or greater than the total amount of slides
-    if(this.state.slidePos <= 1 && id === 'back') return
-    if(this.state.slidePos >= this.state.slideAmt && id === 'forward') return
+    if(this.state.slidePos <= 0 && id === 'back') return
+    if(this.state.slidePos >= this.state.project.slides.length-1 && id === 'forward') return
 
     //changes the slide position back/forward by 1
     id === `back` 
@@ -136,7 +130,13 @@ class Controller extends Component {
                 <div id="proName">Project Name: {this.state.proID}</div>
                 {/* <div id="updated">Updated: (date updated)</div> */}
                 <div className={`row ${this.state.full ? 'expandBackground' : ''}`}>
-                  <img className={`slide ${this.state.full ? 'expandImage' : ''}`} src={require(`../../assets/${this.state.proID}/Presentation/Slide${this.state.slidePos}.jpg`)}/>
+                  {console.log(this.state.project.slides)}
+                  {
+                    this.state.project.slides[0] 
+                    ? <img className={`slide ${this.state.full ? 'expandImage' : ''}`} src={require(`../../assets/${this.state.proID}/${this.state.project.slides[this.state.slidePos]}`)}/>
+                    : console.log('false')
+                  }
+                  
                   <FontAwesomeIcon 
                     icon={this.state.full ?faTimesCircle : faExpand} 
                     className="fullBtn dt"
@@ -161,8 +161,8 @@ class Controller extends Component {
                     Next slide
                   </div>
                   <div id="slideNext" className="col-12">
-                      { this.state.slidePos +1 <= this.state.slideAmt
-                        ?<Slide proID={this.state.proID} slidePos={this.state.slidePos +1} />
+                      { this.state.slidePos+2 <= this.state.project.slides.length
+                        ?<Slide proID={this.state.proID} slidePos={this.state.project.slides[this.state.slidePos+1]} />
                         :<div className="row">
                           <img className="slide" style={{ opacity: 0}} src={require(`../../assets/images/blank.png`)}/> 
                          </div>
@@ -173,14 +173,14 @@ class Controller extends Component {
                   <div className={`col-12 arrow text-center`}>                                      
                     <FontAwesomeIcon 
                       icon={faArrowAltCircleLeft} 
-                      className={`${this.state.slidePos <= 1 ? '' : 'clickable'}`}
-                      onClick={()=> this.state.slidePos <= 1 ? null : this.slideChange('back')}
+                      className={`${this.state.slidePos <= 0 ? '' : 'clickable'}`}
+                      onClick={()=> this.state.slidePos <= 0 ? null : this.slideChange('back')}
                     />
-                    Slide {this.state.slidePos} of {this.state.slideAmt}
+                    Slide {this.state.slidePos+1} of {this.state.project.slides.length}
                     <FontAwesomeIcon 
                       icon={faArrowAltCircleRight}
-                      className={`${this.state.slidePos >= this.state.slideAmt ? null : 'clickable'}`} 
-                      onClick={()=> this.state.slidePos >= this.state.slideAmt ? null : this.slideChange('forward')}  
+                      className={`${this.state.slidePos >= this.state.project.slides.length-1 ? null : 'clickable'}`} 
+                      onClick={()=> this.state.slidePos >= this.state.project.slides.length-1 ? null : this.slideChange('forward')}  
                     />
                   </div> 
                   {/* ----------------------- slideMenu --------------------------------------- */}
@@ -201,14 +201,14 @@ class Controller extends Component {
                 <div className="row slideSelect" style={{height: this.state.caret ? '0' : window.innerWidth < 575 ?'21vw':'12.5vw'}}>
                   <div id="slideBtn" className="col-12" style={{display: this.state.caret ? 'none' : null}}>
                     {
-                      this.state.slideArr.map((name, i) =>    
-                        <div className={`thumb ${this.state.slidePos === i+1 ? 'current' :''}`} key={`slide${i+1}`} id={`slide${i+1}`}>
+                      this.state.project.slides.map((name, i) =>    
+                        <div className={`thumb ${this.state.slidePos === i ? 'current' :''}`} key={`slide${i}`} id={`slide${i}`}>
                           <img 
-                            src={require(`../../assets/${this.state.proID}/Presentation/Slide${i+1}.jpg`)} 
+                            src={require(`../../assets/${this.state.proID}/${this.state.project.slides[i]}`)} 
                             onClick={()=>{
-                              this.btnScroll(i+1)
-                              this.setState({slidePos: i+1})
-                              socket.emit(`slideChange`, {id: this.state.proID, slidePos: i+1})
+                              this.btnScroll(i)
+                              this.setState({slidePos: i})
+                              socket.emit(`slideChange`, {id: this.state.proID, slidePos: i})
                             }}
                           />             
                         </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Slide} from "../../components/Slide";
+import API from "../../utils/API";
 import "./Display.css";
 let socket;
 
@@ -9,6 +10,7 @@ class Display extends Component {
     super(props);
     this.state = {
       proID: props.match.params.id, 
+      project: {slides: []},
       slidePos: 1,
       slidePrev: '',
       mode: true,
@@ -21,6 +23,8 @@ class Display extends Component {
     //event for keydown -------------
     document.addEventListener("keydown", this.keyCall);
 
+    
+
     const io = require('socket.io-client') 
     socket = io() 
     socket.on(this.state.proID, (payload) => {
@@ -28,7 +32,14 @@ class Display extends Component {
       this.slideAlert()
     })
     socket.on(`${this.state.proID}check`, (payload) => {this.setState({slidePos: payload})})
-    socket.emit('posCheck', {id: this.state.proID})    
+    
+    API.findOne({data: this.state.proID})
+    .then(res => { 
+      console.log(res)
+      this.setState({project: res.data.project}) 
+      socket.emit('posCheck', {id: this.state.proID}) 
+    })  
+    
   }
 
   componentWillUnmount() {
@@ -79,7 +90,12 @@ class Display extends Component {
           <div className="col-12">
             <div className="slideNumber" style={this.state.mode ? {display: 'none'} : null}>{`Slide ${this.state.slidePos}`}</div>
             <div className="alertDiv" style={this.state.mode ? {display: 'none'} : this.state.alertStyle}></div>
-            <Slide proID={this.state.proID} slidePos={this.state.slidePos}/>
+              {
+                this.state.project.slides[this.state.slidePos]
+                ? <Slide proID={this.state.proID} slidePos={this.state.project.slides[this.state.slidePos]}/>
+                : null
+              } 
+            
           </div>
         </div>  
       </div>
