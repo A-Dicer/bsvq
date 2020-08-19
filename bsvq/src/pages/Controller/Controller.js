@@ -4,6 +4,7 @@ import API from "../../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft, faArrowAltCircleRight, faCaretSquareDown, faCaretSquareUp } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle, faExpand, faKey} from '@fortawesome/free-solid-svg-icons';
+import PSW from "./psw.js";
 import "./Controller.css";
 let socket;
 
@@ -35,10 +36,10 @@ class Controller extends Component {
     const io = require('socket.io-client')  
     socket = io() 
     //updates on page loading: sets slide number
-        socket.on(`${this.state.proID}check`, (payload) => {
-          this.setState({slidePos: payload})
-          
-        })
+      socket.on(`${this.state.proID}check`, (payload) => {
+        this.setState({slidePos: payload})
+        
+      })
     //updates if someone changes slide 
     socket.on(this.state.proID, (payload) => {
       this.setState({slidePos: payload})
@@ -122,7 +123,7 @@ class Controller extends Component {
     this.setState({passwordInput: value})
 
     setTimeout(() => {
-      if(this.state.passwordInput === "samm2020") {
+      if(this.state.passwordInput === PSW[this.state.proID]) {
         this.setState({opacity: {one: '0', two: '0'}})
         setTimeout(()=>{this.setState({password: true})}, 500)
         setTimeout(()=>{  
