@@ -3,7 +3,7 @@ import {Slide} from "../../components/Slide";
 import API from "../../utils/API";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft, faArrowAltCircleRight, faCaretSquareDown, faCaretSquareUp } from "@fortawesome/free-regular-svg-icons";
-import { faTimesCircle, faExpand} from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faExpand, faKey} from '@fortawesome/free-solid-svg-icons';
 import "./Controller.css";
 let socket;
 
@@ -18,7 +18,10 @@ class Controller extends Component {
       caret: true,
       slideHover: 1,
       prevOpacity: 0,
-      full: false
+      full: false,
+      password: false,
+      passwordInput: '',
+      opacity: {one: '1', two: '0'}
     }
   }
 
@@ -31,15 +34,13 @@ class Controller extends Component {
     //socket IO -------------
     const io = require('socket.io-client')  
     socket = io() 
-
+    //updates on page loading: sets slide number
+        socket.on(`${this.state.proID}check`, (payload) => {
+          this.setState({slidePos: payload})
+          
+        })
     //updates if someone changes slide 
     socket.on(this.state.proID, (payload) => {
-      this.setState({slidePos: payload})
-      this.btnScroll(payload)
-    })
-
-    //updates on page loading: sets slide number
-    socket.on(`${this.state.proID}check`, (payload) => {
       this.setState({slidePos: payload})
       this.btnScroll(payload)
     })
@@ -55,6 +56,12 @@ class Controller extends Component {
 
   componentWillUnmount() {
     socket.emit('disconnect')
+  }
+
+
+// -------------------------------------------- buildArr ----------------------------------------------------
+  start(){
+    this.btnScroll(this.state.slidePos)
   }
 
 // -------------------------------------------- buildArr ----------------------------------------------------
@@ -108,6 +115,23 @@ class Controller extends Component {
       this.btnScroll(this.state.slidePos)
     }.bind(this),10)
   }
+// --------------------------------------- passwordInputChange ----------------------------------------------
+  passwordInputChange = (event) => {
+  // console.log(event)
+    let {value} = event.target;
+    this.setState({passwordInput: value})
+
+    setTimeout(() => {
+      if(this.state.passwordInput === "samm2020") {
+        this.setState({opacity: {one: '0', two: '0'}})
+        setTimeout(()=>{this.setState({password: true})}, 500)
+        setTimeout(()=>{  
+          this.setState({opacity: {one: '0', two: '1'}})
+          this.btnScroll(this.state.slidePos)
+        }, 510)
+      }
+    }, 20);  
+  }
 
 // -------------------------------------------- suffix ------------------------------------------------------
   suffix = (i) => {
@@ -122,9 +146,9 @@ class Controller extends Component {
   render() {
     return (
       <div className="container-fluid" id="controlContainer"> 
-        <div className="row">
+        <div className="row" style={this.state.password ? {opacity: this.state.opacity.two} : {display: `none`, opacity: '.0'}}>
           {/* -------------------------------- controler -------------------------------------- */}
-          <div className="col-12">
+          <div className="col-12" >
             <div id="controller" className="row">
               {/* ---------------------------- logoMobile-------------------------------------- */}
               <div className="col-12 mb text-center">
@@ -221,7 +245,28 @@ class Controller extends Component {
             </div>
           </div>
           {/* --------------------------------------------------------------------------------- */}
-        </div>  
+          
+        </div> 
+        {/* ---------------------------------- password --------------------------------------- */}
+        <div className="row" style={!this.state.password ? {opacity: this.state.opacity.one} : {display: `none`, opacity: '.0'}}>
+            <div className="col-12">
+              <img id="logo" src={require(`../../assets/images/bsdv_logo_transparent.png`)} style={{maxWidth: '400px', marginTop: '20px', marginBottom: '50px'}} /> 
+            </div>
+            <div className="col-sm-6">
+              Please Enter Password
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><FontAwesomeIcon icon={faKey} /></span>
+                </div>
+                <input 
+                  className="form-control form-control-sm" 
+                  type="password" 
+                  value={this.state.passwordInput} 
+                  onChange={this.passwordInputChange} 
+                />
+              </div>
+            </div>  
+          </div> 
       </div>
     );
   }

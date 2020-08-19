@@ -6,6 +6,10 @@ body {
 }
 hr {border-top: solid .1vw rgba(255, 255, 255, .2)}
 
+.row {
+    transition: opacity 500ms;
+}
+
 /* ---------------------- controller --------------------- */
 #controller {
     margin: 1.5vw;
