@@ -129,7 +129,7 @@ class Controller extends Component {
         setTimeout(()=>{  
           this.setState({opacity: {one: '0', two: '1'}})
           this.btnScroll(this.state.slidePos)
-        }, 510)
+        }, 530)
       }
     }, 20);  
   }
