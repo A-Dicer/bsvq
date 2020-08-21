@@ -28,7 +28,6 @@ class Controller extends Component {
 
   componentDidMount() {
     document.body.style.backgroundImage = `url(${require('../../assets/images/background.jpg')})`;
-    console.log(PSW[this.state.proID].pwd)
     //event for keydown -------------
     document.addEventListener("keydown", this.keyCall);
    

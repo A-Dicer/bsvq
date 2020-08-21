@@ -1,6 +1,6 @@
 module.exports = {
     demo: {pwd: 'demo', v:'v.1'},
-    PUMA_SAMM2020_Bill_Crom: {pwd: 'samm2020', v:'v.3'},
+    PUMA_SAMM2020_BIll_Crom: {pwd: 'samm2020', v:'v.3'},
     PUMA_SAMM2020_Noe_Gutierrez: {pwd: 'samm2020', v:'v.1'},
     PUMA_SAMM2020_Deb_Jackson: {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Angela_Nicolella_Jay: {pwd: 'samm2020', v:'v.1'}, 
@@ -12,5 +12,5 @@ module.exports = {
     PUMA_SAMM2020_Paul_Reider: {pwd: 'samm2020', v:'v.1'},
     PUMA_SAMM2020_Richard_Bryce: {pwd: 'samm2020', v:'draft'},
     PUMA_SAMM2020_Julie_Tajeldin: {pwd: 'samm2020', v:'v.2'},
-
+    PUMA_SAMM2020_Vivien_Gabriel: {pwd: 'samm2020', v:'v.1'},
     }
