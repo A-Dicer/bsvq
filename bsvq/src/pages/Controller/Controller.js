@@ -118,12 +118,11 @@ class Controller extends Component {
   }
 // --------------------------------------- passwordInputChange ----------------------------------------------
   passwordInputChange = (event) => {
-  // console.log(event)
     let {value} = event.target;
     this.setState({passwordInput: value})
 
     setTimeout(() => {
-      if(this.state.passwordInput === PSW[this.state.proID]) {
+      if(this.state.passwordInput === PSW[this.state.proID].pwd) {
         this.setState({opacity: {one: '0', two: '0'}})
         setTimeout(()=>{this.setState({password: true})}, 500)
         setTimeout(()=>{  
@@ -158,7 +157,7 @@ class Controller extends Component {
               </div>
               {/* -------------------------- col-8/leftside ----------------------------------- */}
               <div className="col-sm-8">
-                <div id="proName">Project Name: {this.state.proID.replace(/_/g, ' ')}</div>
+    <div id="proName">Project Name: {this.state.proID.replace(/_/g, ' ')} {PSW[this.state.proID].v}</div>
                 {/* <div id="updated">Updated: (date updated)</div> */}
                 <div className={`row ${this.state.full ? 'expandBackground' : ''}`}>
                   <img className={`slide ${this.state.full ? 'expandImage' : ''}`} src={require(`../../assets/${this.state.proID}/Presentation/Slide${this.state.slidePos}.jpg`)}/>
