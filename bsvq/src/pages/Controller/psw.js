@@ -13,6 +13,6 @@ module.exports = {
     PUMA_SAMM2020_Richard_Bryce: {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Julie_Tajeldin: {pwd: 'samm2020', v:'v.4'},
     PUMA_SAMM2020_Vivien_Gabriel: {pwd: 'samm2020', v:'v.1'},
-    PUMA_SAMM2020_Jeff_Ludwig: {pwd: 'samm2020', v:'v.2.1'},
+    PUMA_SAMM2020_Jeff_Ludwig: {pwd: 'samm2020', v:'v.7'},
     PUMA_SAMM2020_Felicia_Townsel: {pwd: 'samm2020', v:'v.4'},
     }
