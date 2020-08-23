@@ -9,7 +9,7 @@ module.exports = {
     PUMA_SAMM2020_Ive_Grgas: {pwd: 'samm2020', v:'v.7'},
     PUMA_SAMM2020_Rashawnda_Baddie_Clyburn   : {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Alan_Auerbach: {pwd: 'samm2020', v:'v.1'},
-    PUMA_SAMM2020_Paul_Reider_Open: {pwd: 'samm2020', v:'v.5'},
+    PUMA_SAMM2020_Paul_Reider_Open: {pwd: 'samm2020', v:'v.6'},
     PUMA_SAMM2020_Paul_Reider_Sales: {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Richard_Bryce: {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Julie_Tajeldin: {pwd: 'samm2020', v:'v.4'},
