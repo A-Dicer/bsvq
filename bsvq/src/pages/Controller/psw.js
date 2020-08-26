@@ -1,7 +1,7 @@
 module.exports = {
     demo: {pwd: 'demo', v:'v.1'},
     PUMA_SAMM2020_BIll_Crom: {pwd: 'samm2020', v:'v.3'},
-    PUMA_SAMM2020_Noe_Gutierrez: {pwd: 'samm2020', v:'v.1.1'},
+    PUMA_SAMM2020_Noe_Gutierrez: {pwd: 'samm2020', v:'v.1.2'},
     PUMA_SAMM2020_Deb_Jackson: {pwd: 'samm2020', v:'v.2'},
     PUMA_SAMM2020_Angela_Nicolella_Jay: {pwd: 'samm2020', v:'v.1'}, 
     PUMA_SAMM2020_Lisa_Croissant: {pwd: 'samm2020', v:'v.7'}, 
