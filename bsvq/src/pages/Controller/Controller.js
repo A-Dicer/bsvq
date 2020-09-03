@@ -30,7 +30,9 @@ class Controller extends Component {
     document.body.style.backgroundImage = `url(${require('../../assets/images/background.jpg')})`;
     //event for keydown -------------
     document.addEventListener("keydown", this.keyCall);
-   
+    
+    if(this.state.proID === "demo") this.setState({password: true})
+
     //socket IO -------------
     const io = require('socket.io-client')  
     socket = io() 
