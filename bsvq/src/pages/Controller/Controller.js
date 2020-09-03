@@ -31,7 +31,7 @@ class Controller extends Component {
     //event for keydown -------------
     document.addEventListener("keydown", this.keyCall);
     
-    if(this.state.proID === "demo") this.setState({password: true})
+    if(this.state.proID === "demo") this.setState({password: true, opacity: {one: '0', two: '1'}})
 
     //socket IO -------------
     const io = require('socket.io-client')  
